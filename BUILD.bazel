@@ -1,0 +1,4 @@
+load("@bazel_gazelle//:def.bzl", "gazelle")
+
+# gazelle:prefix github.com/Pranc1ngPegasus/bazel-grpc-gateway-practice
+gazelle(name = "gazelle")
