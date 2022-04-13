@@ -13,3 +13,29 @@ gazelle(
     ],
     command = "update-repos",
 )
+
+config_setting(
+    name = "build_darwin_arm64",
+    values = {
+        "define": "build_platform=darwin_arm64",
+    },
+)
+
+# proto にて生成された go ファイル(*.pb.go, *.pb.gw.go, mock.go) のsymlinkを貼る
+# ref: https://github.com/bazelbuild/rules_go/issues/512
+filegroup(
+    name = "proto-go",
+    srcs = select({
+        ":build_darwin_arm64": glob([
+            "bazel-out/darwin_arm64-fastbuild/bin/proto/**/*.pb.go",
+            "bazel-out/darwin_arm64-fastbuild/bin/proto/**/*.pb.gw.go",
+        ]),
+    }),
+)
+
+genrule(
+    name = "gen-copy-sh",
+    srcs = [":proto-go"],
+    outs = ["copy.sh"],
+    cmd = "ls $(SRCS) | awk '{ print($$0, $$0) }' | awk '{ gsub(/^bazel-out.*\\/proto\\//, \"proto\\/\", $$2); print(\"mkdir -p \", \"\\`dirname \"$$2\"\\`\", \"; cp \", \"\\`pwd\\`/\"$$1, $$2)}' >> $(OUTS)",
+)
