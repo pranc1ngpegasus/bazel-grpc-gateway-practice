@@ -8,6 +8,7 @@ gazelle(
     args = [
         "-from_file=go.mod",
         "-to_macro=deps.bzl%go_dependencies",
+        "build_file_proto_mode=disable_global",
         "-prune",
     ],
     command = "update-repos",

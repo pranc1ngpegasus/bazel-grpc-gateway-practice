@@ -1,9 +1,9 @@
 load("@io_bazel_rules_go//go:def.bzl", "go_library")
 
 go_library(
-    name = "configuration",
+    name = "go_default_library",
     srcs = ["configuration.go"],
     importpath = "github.com/Pranc1ngPegasus/bazel-grpc-gateway-practice/adapter/configuration",
     visibility = ["//visibility:public"],
-    deps = ["@com_github_kelseyhightower_envconfig//:envconfig"],
+    deps = ["@com_github_kelseyhightower_envconfig//:go_default_library"],
 )
