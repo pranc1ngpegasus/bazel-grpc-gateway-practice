@@ -1,19 +1,31 @@
 load("@rules_proto//proto:defs.bzl", "proto_library")
 load("@io_bazel_rules_go//go:def.bzl", "go_library")
 load("@io_bazel_rules_go//proto:def.bzl", "go_proto_library")
+load("@com_github_grpc_ecosystem_grpc_gateway_v2//protoc-gen-openapiv2:defs.bzl", "protoc_gen_openapiv2")
 
 proto_library(
     name = "v1_proto",
     srcs = ["api.proto"],
     visibility = ["//visibility:public"],
+    deps = [
+        "@com_github_grpc_ecosystem_grpc_gateway_v2//protoc-gen-openapiv2/options:options_proto",
+        "@go_googleapis//google/api:annotations_proto",
+    ],  #keep
 )
 
 go_proto_library(
     name = "v1_go_proto",
-    compilers = ["@io_bazel_rules_go//proto:go_grpc"],
+    compilers = [
+        "@com_github_grpc_ecosystem_grpc_gateway_v2//protoc-gen-grpc-gateway:go_gen_grpc_gateway",
+        "@io_bazel_rules_go//proto:go_grpc",
+    ],  #keep
     importpath = "github.com/Pranc1ngPegasus/bazel-grpc-gateway-practice/proto/bazel_grpc_gateway_practice/v1",
     proto = ":v1_proto",
     visibility = ["//visibility:public"],
+    deps = [
+        "@com_github_grpc_ecosystem_grpc_gateway_v2//protoc-gen-openapiv2/options:go_default_library",
+        "@go_googleapis//google/api:annotations_go_proto",
+    ],  #keep
 )
 
 go_library(
@@ -21,4 +33,11 @@ go_library(
     embed = [":v1_go_proto"],
     importpath = "github.com/Pranc1ngPegasus/bazel-grpc-gateway-practice/proto/bazel_grpc_gateway_practice/v1",
     visibility = ["//visibility:public"],
+)
+
+#keep
+protoc_gen_openapiv2(
+    name = "bazel_grpc_gateway_practice_v1",
+    proto = ":v1_proto",
+    single_output = True,
 )

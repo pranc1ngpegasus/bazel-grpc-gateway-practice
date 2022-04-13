@@ -6,6 +6,8 @@ go_library(
     importpath = "github.com/Pranc1ngPegasus/bazel-grpc-gateway-practice/tools",
     visibility = ["//visibility:public"],
     deps = [
+        "@com_github_grpc_ecosystem_grpc_gateway_v2//protoc-gen-grpc-gateway:go_default_library",
+        "@com_github_grpc_ecosystem_grpc_gateway_v2//protoc-gen-openapiv2:go_default_library",
         "@org_golang_google_grpc_cmd_protoc_gen_go_grpc//:go_default_library",
         "@org_golang_google_protobuf//cmd/protoc-gen-go:go_default_library",
     ],
