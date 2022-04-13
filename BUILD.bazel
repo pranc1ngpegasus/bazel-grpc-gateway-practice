@@ -40,7 +40,7 @@ filegroup(
             "bazel-out/darwin_arm64-fastbuild/bin/proto/**/*.pb.go",
             "bazel-out/darwin_arm64-fastbuild/bin/proto/**/*.pb.gw.go",
         ]),
-         ":build_k8": glob([
+        ":build_k8": glob([
             "bazel-out/k8-fastbuild/bin/proto/**/*.pb.go",
             "bazel-out/k8-fastbuild/bin/proto/**/*.pb.gw.go",
         ]),
