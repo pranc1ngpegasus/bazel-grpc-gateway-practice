@@ -3,9 +3,16 @@ syntax = "proto3";
 package proto.bazel_grpc_gateway_practice.v1;
 option go_package = "github.com/Pranc1ngPegasus/bazel-grpc-gateway-practice/proto/bazel_grpc_gateway_practice/v1";
 
+import "google/api/annotations.proto";
+
 service BazelGrpcGatewayPracticeService {
-  rpc Echo(EchoRequest) returns (EchoResponse);
-};
+  rpc Echo(EchoRequest) returns (EchoResponse) {
+    option (google.api.http) = {
+      post : "/v1/echo"
+      body : "*"
+    };
+  }
+}
 
 message EchoRequest { string value = 1; }
 
