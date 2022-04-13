@@ -14,6 +14,7 @@ func initialize() server.GrpcServer {
 	wire.Build(
 		configuration.Get,
 
+		handler.NewEchoProvider,
 		handler.NewBazelGrpcGatewayPracticeServiceV1,
 
 		server.NewGrpcServer,

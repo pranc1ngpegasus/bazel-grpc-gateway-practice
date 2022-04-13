@@ -16,7 +16,8 @@ import (
 
 func initialize() server.GrpcServer {
 	config := configuration.Get()
-	bazelGrpcGatewayPracticeServiceV1 := handler.NewBazelGrpcGatewayPracticeServiceV1()
+	echoProvider := handler.NewEchoProvider()
+	bazelGrpcGatewayPracticeServiceV1 := handler.NewBazelGrpcGatewayPracticeServiceV1(echoProvider)
 	grpcServer := server.NewGrpcServer(config, bazelGrpcGatewayPracticeServiceV1)
 	return grpcServer
 }
