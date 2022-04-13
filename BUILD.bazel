@@ -21,6 +21,13 @@ config_setting(
     },
 )
 
+config_setting(
+    name = "build_k8",
+    values = {
+        "define": "build_platform=k8",
+    },
+)
+
 # proto にて生成された go ファイル(*.pb.go, *.pb.gw.go, mock.go) のsymlinkを貼る
 # ref: https://github.com/bazelbuild/rules_go/issues/512
 filegroup(
@@ -29,6 +36,10 @@ filegroup(
         ":build_darwin_arm64": glob([
             "bazel-out/darwin_arm64-fastbuild/bin/proto/**/*.pb.go",
             "bazel-out/darwin_arm64-fastbuild/bin/proto/**/*.pb.gw.go",
+        ]),
+         ":build_k8": glob([
+            "bazel-out/k8-fastbuild/bin/proto/**/*.pb.go",
+            "bazel-out/k8-fastbuild/bin/proto/**/*.pb.gw.go",
         ]),
     }),
 )
