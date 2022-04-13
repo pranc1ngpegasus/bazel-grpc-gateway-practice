@@ -152,6 +152,13 @@ def go_dependencies():
         version = "v1.4.0",
     )
     go_repository(
+        name = "com_github_philip_bui_grpc_zerolog",
+        importpath = "github.com/philip-bui/grpc-zerolog",
+        sum = "h1:EMacvLRUd2O1K0eWod27ZP5CY1iTNkhBDLSN+Q4JEvA=",
+        version = "v1.0.1",
+    )
+
+    go_repository(
         name = "com_github_pkg_errors",
         importpath = "github.com/pkg/errors",
         sum = "h1:FEBLx1zS214owpjy7qsBeixbURkuhQAwrK5UwLGTwt4=",
