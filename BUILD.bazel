@@ -1,4 +1,5 @@
 load("@bazel_gazelle//:def.bzl", "gazelle")
+load("@com_github_bazelbuild_buildtools//buildifier:def.bzl", "buildifier")
 
 # gazelle:prefix github.com/Pranc1ngPegasus/bazel-grpc-gateway-practice
 gazelle(name = "gazelle")
@@ -13,6 +14,8 @@ gazelle(
     ],
     command = "update-repos",
 )
+
+buildifier(name = "buildifier")
 
 config_setting(
     name = "build_darwin_arm64",
@@ -37,7 +40,7 @@ filegroup(
             "bazel-out/darwin_arm64-fastbuild/bin/proto/**/*.pb.go",
             "bazel-out/darwin_arm64-fastbuild/bin/proto/**/*.pb.gw.go",
         ]),
-         ":build_k8": glob([
+        ":build_k8": glob([
             "bazel-out/k8-fastbuild/bin/proto/**/*.pb.go",
             "bazel-out/k8-fastbuild/bin/proto/**/*.pb.gw.go",
         ]),
