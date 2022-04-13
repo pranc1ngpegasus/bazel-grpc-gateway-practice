@@ -5,9 +5,9 @@ import (
 
 	"github.com/Pranc1ngPegasus/bazel-grpc-gateway-practice/adapter/configuration"
 	"github.com/Pranc1ngPegasus/bazel-grpc-gateway-practice/adapter/handler"
-	"github.com/Pranc1ngPegasus/bazel-grpc-gateway-practice/adapter/logger"
 	pb "github.com/Pranc1ngPegasus/bazel-grpc-gateway-practice/proto/bazel_grpc_gateway_practice/v1"
 
+	"github.com/rs/zerolog/log"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/keepalive"
 )
@@ -17,13 +17,12 @@ func init() {
 }
 
 func main() {
-	logger := logger.New()
 	env := configuration.Get()
 
-	logger.Info().Msgf("gRPC port: %s", env.Grpc.ServerPort)
+	log.Info().Msgf("gRPC port: %s", env.Grpc.ServerPort)
 	lis, err := net.Listen("tcp", ":"+env.Grpc.ServerPort)
 	if err != nil {
-		logger.Error().Err(err)
+		log.Error().Err(err)
 		return
 	}
 
@@ -47,9 +46,9 @@ func main() {
 	bazelGrpcGatewayPracticeServiceV1 := handler.NewBazelGrpcGatewayPracticeServiceV1()
 	pb.RegisterBazelGrpcGatewayPracticeServiceServer(s, bazelGrpcGatewayPracticeServiceV1)
 
-	logger.Info().Msg("start gRPC server.")
+	log.Info().Msg("start gRPC server.")
 	if err = s.Serve(lis); err != nil {
-		logger.Error().Err(err)
+		log.Error().Err(err)
 		return
 	}
 }
