@@ -7,6 +7,7 @@ import (
 	"github.com/Pranc1ngPegasus/bazel-grpc-gateway-practice/adapter/handler"
 	pb "github.com/Pranc1ngPegasus/bazel-grpc-gateway-practice/proto/bazel_grpc_gateway_practice/v1"
 
+	"github.com/philip-bui/grpc-zerolog"
 	"github.com/rs/zerolog/log"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/keepalive"
@@ -44,6 +45,7 @@ func NewGrpcServer(
 				Timeout:               config.Grpc.Timeout,
 			},
 		),
+		zerolog.UnaryInterceptor(),
 	)
 
 	pb.RegisterBazelGrpcGatewayPracticeServiceServer(server, bazelGrpcGatewayPracticeServiceV1)
