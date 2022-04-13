@@ -18,3 +18,7 @@ bazel-build: proto-clean
 	bazel build --sandbox_debug //adapter/... //cmd/... //proto/...
 	bazel build --sandbox_debug --define build_platform=${BAZEL_BUILD_PLATFORM} //:gen-copy-sh
 	@./bazel-bin/copy.sh
+
+.PHONY: generate
+generate: bazel-build
+	go generate ./...
