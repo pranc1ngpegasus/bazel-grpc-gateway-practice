@@ -23,3 +23,7 @@ bazel-build: proto-clean
 .PHONY: generate
 generate: bazel-build
 	go generate ./...
+
+.PHONY: ent-new
+ent-new:
+	go run entgo.io/ent/cmd/ent init ${PKGNAME}
