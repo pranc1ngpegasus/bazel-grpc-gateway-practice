@@ -23,3 +23,19 @@ bazel-build: proto-clean
 .PHONY: generate
 generate: bazel-build
 	go generate ./...
+
+.PHONY: prepare-sql-migrate
+prepare-sql-migrate:
+	envsubst < ./dbconfig.yaml.tpl > ./dbconfig.yaml
+
+.PHONY: migrate-new
+migrate-new: prepare-sql-migrate
+	go run github.com/rubenv/sql-migrate/sql-migrate new $(FILENAME) -config=dbconfig.yaml
+
+.PHONY: migrate-up
+migrate-up: prepare-sql-migrate
+	go run github.com/rubenv/sql-migrate/sql-migrate up -env=${ENV} -config=dbconfig.yaml
+
+.PHONY: migrate-down
+migrate-down: prepare-sql-migrate
+	go run github.com/rubenv/sql-migrate/sql-migrate down -env=${ENV} -config=dbconfig.yaml

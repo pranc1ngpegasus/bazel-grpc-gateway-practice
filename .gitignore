@@ -1,3 +1,5 @@
 bazel-*
 **/*.pb.go
 **/*.pb.gw.go
+
+dbconfig.yaml
