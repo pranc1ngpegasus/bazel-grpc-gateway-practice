@@ -1,0 +1,17 @@
+version: '3'
+services:
+  mysql:
+    image: mysql:latest
+    environment:
+      MYSQL_DATABASE: ${DATABASE_NAME}
+      MYSQL_ROOT_PASSWORD: ${DATABASE_PASSWORD}
+      MYSQL_USER: ${DATABASE_USER}
+      MYSQL_PASSWORD: ${DATABASE_PASSWORD}
+      TZ: "Asia/Tokyo"
+    platform: linux/x86_64
+    ports:
+      - ${DATABASE_PORT}:3306
+    command: |
+      mysqld --character-set-server=utf8mb4 --collation-server=utf8mb4_general_ci
+    volumes:
+      - ./mysql_data:/var/lib/mysql
