@@ -1,0 +1,16 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_library")
+
+go_library(
+    name = "go_default_library",
+    srcs = [
+        "migrate.go",
+        "schema.go",
+    ],
+    importpath = "github.com/Pranc1ngPegasus/bazel-grpc-gateway-practice/ent/migrate",
+    visibility = ["//visibility:public"],
+    deps = [
+        "@io_entgo_ent//dialect:go_default_library",
+        "@io_entgo_ent//dialect/sql/schema:go_default_library",
+        "@io_entgo_ent//schema/field:go_default_library",
+    ],
+)
