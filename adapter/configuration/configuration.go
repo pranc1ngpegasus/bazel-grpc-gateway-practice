@@ -23,6 +23,14 @@ type (
 			Time                           time.Duration `envconfig:"GRPC_SERVER_PARAM_TIME" default:"20s"`
 			Timeout                        time.Duration `envconfig:"GRPC_SERVER_PARAM_TIMEOUT" default:"6s"`
 		}
+
+		Database struct {
+			User     string `envconfig:"DATABASE_USER" default:"lqsym"`
+			Password string `envconfig:"DATABASE_PASSWORD" default:"lqsym"`
+			Host     string `envconfig:"DATABASE_HOST" default:"localhost"`
+			Port     int    `envconfig:"DATABASE_PORT" default:"3306"`
+			Name     string `envconfig:"DATABASE_NAME" default:"bazel-grpc-gateway-practice"`
+		}
 	}
 )
 

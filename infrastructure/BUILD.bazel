@@ -1,0 +1,15 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_library")
+
+go_library(
+    name = "go_default_library",
+    srcs = ["rdb_connector.go"],
+    importpath = "github.com/Pranc1ngPegasus/bazel-grpc-gateway-practice/infrastructure",
+    visibility = ["//visibility:public"],
+    deps = [
+        "//adapter/configuration:go_default_library",
+        "//ent:go_default_library",
+        "@com_github_rs_zerolog//log:go_default_library",
+        "@io_entgo_ent//dialect:go_default_library",
+        "@io_entgo_ent//dialect/sql:go_default_library",
+    ],
+)
