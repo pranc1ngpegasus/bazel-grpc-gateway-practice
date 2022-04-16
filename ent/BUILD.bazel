@@ -1,0 +1,33 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_library")
+
+go_library(
+    name = "go_default_library",
+    srcs = [
+        "client.go",
+        "config.go",
+        "context.go",
+        "ent.go",
+        "generate.go",
+        "mutation.go",
+        "runtime.go",
+        "tx.go",
+        "user.go",
+        "user_create.go",
+        "user_delete.go",
+        "user_query.go",
+        "user_update.go",
+    ],
+    importpath = "github.com/Pranc1ngPegasus/bazel-grpc-gateway-practice/ent",
+    visibility = ["//visibility:public"],
+    deps = [
+        "//ent/migrate:go_default_library",
+        "//ent/predicate:go_default_library",
+        "//ent/schema:go_default_library",
+        "//ent/user:go_default_library",
+        "@io_entgo_ent//:go_default_library",
+        "@io_entgo_ent//dialect:go_default_library",
+        "@io_entgo_ent//dialect/sql:go_default_library",
+        "@io_entgo_ent//dialect/sql/sqlgraph:go_default_library",
+        "@io_entgo_ent//schema/field:go_default_library",
+    ],
+)
