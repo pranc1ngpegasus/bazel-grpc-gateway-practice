@@ -1,0 +1,23 @@
+syntax = "proto3";
+
+package proto.user.v1;
+option go_package = "github.com/Pranc1ngPegasus/bazel-grpc-gateway-practice/proto/user/v1";
+
+import "google/api/annotations.proto";
+import "proto/types/user.proto";
+
+service UserService {
+  rpc CreateUser(CreateUserRequest) returns (CreateUserResponse) {
+    option (google.api.http) = {
+      post : "/v1/user"
+      body : "*"
+    };
+  }
+}
+
+message CreateUserRequest { string name = 1; }
+
+message CreateUserResponse {
+  string id = 1;
+  string name = 2;
+}
