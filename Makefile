@@ -42,9 +42,9 @@ endif
 
 .PHONY: resolve-dependencies
 resolve-dependencies: proto-clean
-	bazel run //:buildifier
-	bazel run //:gazelle
-	bazel run //:gazelle -- update-repos -from_file=go.mod -to_macro=deps.bzl%go_dependencies
+	bazelisk run //:buildifier
+	bazelisk run //:gazelle
+	bazelisk run //:gazelle -- update-repos -from_file=go.mod -to_macro=deps.bzl%go_dependencies
 
 .PHONY: proto-clean
 proto-clean:
@@ -52,8 +52,8 @@ proto-clean:
 
 .PHONY: bazel-build
 bazel-build: proto-clean
-	bazel build --sandbox_debug //adapter/... //cmd/... //proto/...
-	bazel build --sandbox_debug --define build_platform=${BAZEL_BUILD_PLATFORM} //:gen-copy-sh
+	bazelisk build --sandbox_debug //adapter/... //cmd/... //proto/...
+	bazelisk build --sandbox_debug --define build_platform=${BAZEL_BUILD_PLATFORM} //:gen-copy-sh
 	@./bazel-bin/copy.sh
 
 .PHONY: generate
