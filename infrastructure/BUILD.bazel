@@ -8,6 +8,7 @@ go_library(
     deps = [
         "//adapter/configuration:go_default_library",
         "//ent:go_default_library",
+        "@com_github_go_sql_driver_mysql//:go_default_library",
         "@com_github_rs_zerolog//log:go_default_library",
         "@io_entgo_ent//dialect:go_default_library",
         "@io_entgo_ent//dialect/sql:go_default_library",

@@ -10,6 +10,7 @@ import (
 
 	"entgo.io/ent/dialect"
 	entsql "entgo.io/ent/dialect/sql"
+	_ "github.com/go-sql-driver/mysql"
 	"github.com/rs/zerolog/log"
 )
 
