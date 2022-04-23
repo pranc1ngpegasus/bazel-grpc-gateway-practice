@@ -5,7 +5,8 @@ import (
 
 	"github.com/Pranc1ngPegasus/bazel-grpc-gateway-practice/adapter/configuration"
 	"github.com/Pranc1ngPegasus/bazel-grpc-gateway-practice/adapter/handler"
-	pb "github.com/Pranc1ngPegasus/bazel-grpc-gateway-practice/proto/bazel_grpc_gateway_practice/v1"
+	v1 "github.com/Pranc1ngPegasus/bazel-grpc-gateway-practice/proto/bazel_grpc_gateway_practice/v1"
+	userV1 "github.com/Pranc1ngPegasus/bazel-grpc-gateway-practice/proto/user/v1"
 
 	"github.com/philip-bui/grpc-zerolog"
 	"github.com/rs/zerolog/log"
@@ -22,12 +23,14 @@ type (
 		server                            *grpc.Server
 		config                            configuration.Config
 		bazelGrpcGatewayPracticeServiceV1 handler.BazelGrpcGatewayPracticeServiceV1
+		userServiceV1                     handler.UserServiceV1
 	}
 )
 
 func NewGrpcServer(
 	config configuration.Config,
 	bazelGrpcGatewayPracticeServiceV1 handler.BazelGrpcGatewayPracticeServiceV1,
+	userServiceV1 handler.UserServiceV1,
 ) GrpcServer {
 	server := grpc.NewServer(
 		grpc.KeepaliveEnforcementPolicy(
@@ -48,7 +51,8 @@ func NewGrpcServer(
 		zerolog.UnaryInterceptor(),
 	)
 
-	pb.RegisterBazelGrpcGatewayPracticeServiceServer(server, bazelGrpcGatewayPracticeServiceV1)
+	v1.RegisterBazelGrpcGatewayPracticeServiceServer(server, bazelGrpcGatewayPracticeServiceV1)
+	userV1.RegisterUserServiceServer(server, userServiceV1)
 
 	return &grpcServer{
 		server: server,

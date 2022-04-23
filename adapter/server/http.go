@@ -5,7 +5,8 @@ import (
 	"net/http"
 
 	"github.com/Pranc1ngPegasus/bazel-grpc-gateway-practice/adapter/configuration"
-	pb "github.com/Pranc1ngPegasus/bazel-grpc-gateway-practice/proto/bazel_grpc_gateway_practice/v1"
+	v1 "github.com/Pranc1ngPegasus/bazel-grpc-gateway-practice/proto/bazel_grpc_gateway_practice/v1"
+	userV1 "github.com/Pranc1ngPegasus/bazel-grpc-gateway-practice/proto/user/v1"
 
 	"github.com/grpc-ecosystem/grpc-gateway/v2/runtime"
 	"github.com/rs/zerolog/log"
@@ -45,7 +46,12 @@ func (s *httpServer) Serve() error {
 	}
 
 	log.Info().Msgf("listen gRPC port: %s", s.config.Grpc.ServerPort)
-	if err := pb.RegisterBazelGrpcGatewayPracticeServiceHandlerFromEndpoint(ctx, s.server, ":"+s.config.Grpc.ServerPort, opts); err != nil {
+	if err := v1.RegisterBazelGrpcGatewayPracticeServiceHandlerFromEndpoint(ctx, s.server, ":"+s.config.Grpc.ServerPort, opts); err != nil {
+		log.Error().Stack().Caller().Err(err)
+		panic(err)
+	}
+
+	if err := userV1.RegisterUserServiceHandlerFromEndpoint(ctx, s.server, ":"+s.config.Grpc.ServerPort, opts); err != nil {
 		log.Error().Stack().Caller().Err(err)
 		panic(err)
 	}

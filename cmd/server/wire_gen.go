@@ -9,7 +9,10 @@ package main
 import (
 	"github.com/Pranc1ngPegasus/bazel-grpc-gateway-practice/adapter/configuration"
 	"github.com/Pranc1ngPegasus/bazel-grpc-gateway-practice/adapter/handler"
+	"github.com/Pranc1ngPegasus/bazel-grpc-gateway-practice/adapter/repository"
 	"github.com/Pranc1ngPegasus/bazel-grpc-gateway-practice/adapter/server"
+	"github.com/Pranc1ngPegasus/bazel-grpc-gateway-practice/infrastructure"
+	"github.com/Pranc1ngPegasus/bazel-grpc-gateway-practice/usecase"
 )
 
 // Injectors from inject.go:
@@ -18,6 +21,11 @@ func initialize() server.GrpcServer {
 	config := configuration.Get()
 	echoProvider := handler.NewEchoProvider()
 	bazelGrpcGatewayPracticeServiceV1 := handler.NewBazelGrpcGatewayPracticeServiceV1(echoProvider)
-	grpcServer := server.NewGrpcServer(config, bazelGrpcGatewayPracticeServiceV1)
+	rdbConnector := infrastructure.NewRDBConnector(config)
+	user := repository.NewUser(rdbConnector)
+	createUser := usecase.NewCreateUser(user)
+	createUserProvider := handler.NewCreateUserProvider(createUser)
+	userServiceV1 := handler.NewUserServiceV1(createUserProvider)
+	grpcServer := server.NewGrpcServer(config, bazelGrpcGatewayPracticeServiceV1, userServiceV1)
 	return grpcServer
 }

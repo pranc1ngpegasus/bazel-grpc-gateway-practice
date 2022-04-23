@@ -50,6 +50,12 @@ resolve-dependencies: proto-clean
 proto-clean:
 	@find ./proto | grep -E ".*.pb(.gw)?.go" | xargs rm -f
 
+.PHONY: proto-build
+proto-build:
+	bazelisk build --sandbox_debug //proto/...
+	bazelisk build --sandbox_debug --define build_platform=${BAZEL_BUILD_PLATFORM} //:gen-copy-sh
+	@./bazel-bin/copy.sh
+
 .PHONY: bazel-build
 bazel-build: proto-clean
 	bazelisk build --sandbox_debug //adapter/... //cmd/... //proto/...
