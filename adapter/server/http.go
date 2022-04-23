@@ -45,6 +45,7 @@ func NewHttpServer(
 
 	return &httpServer{
 		server: mux,
+		config: config,
 	}
 }
 
