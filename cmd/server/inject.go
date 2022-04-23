@@ -26,8 +26,6 @@ func initialize() server.GrpcServer {
 
 		handler.NewCreateUserProvider,
 		handler.NewUserServiceV1,
-		handler.NewEchoProvider,
-		handler.NewBazelGrpcGatewayPracticeServiceV1,
 
 		server.NewGrpcServer,
 	)

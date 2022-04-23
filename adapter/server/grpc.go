@@ -5,7 +5,6 @@ import (
 
 	"github.com/Pranc1ngPegasus/bazel-grpc-gateway-practice/adapter/configuration"
 	"github.com/Pranc1ngPegasus/bazel-grpc-gateway-practice/adapter/handler"
-	v1 "github.com/Pranc1ngPegasus/bazel-grpc-gateway-practice/proto/bazel_grpc_gateway_practice/v1"
 	userV1 "github.com/Pranc1ngPegasus/bazel-grpc-gateway-practice/proto/user/v1"
 
 	"github.com/philip-bui/grpc-zerolog"
@@ -20,16 +19,14 @@ type (
 	}
 
 	grpcServer struct {
-		server                            *grpc.Server
-		config                            configuration.Config
-		bazelGrpcGatewayPracticeServiceV1 handler.BazelGrpcGatewayPracticeServiceV1
-		userServiceV1                     handler.UserServiceV1
+		server        *grpc.Server
+		config        configuration.Config
+		userServiceV1 handler.UserServiceV1
 	}
 )
 
 func NewGrpcServer(
 	config configuration.Config,
-	bazelGrpcGatewayPracticeServiceV1 handler.BazelGrpcGatewayPracticeServiceV1,
 	userServiceV1 handler.UserServiceV1,
 ) GrpcServer {
 	server := grpc.NewServer(
@@ -51,7 +48,6 @@ func NewGrpcServer(
 		zerolog.UnaryInterceptor(),
 	)
 
-	v1.RegisterBazelGrpcGatewayPracticeServiceServer(server, bazelGrpcGatewayPracticeServiceV1)
 	userV1.RegisterUserServiceServer(server, userServiceV1)
 
 	return &grpcServer{

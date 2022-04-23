@@ -19,13 +19,11 @@ import (
 
 func initialize() server.GrpcServer {
 	config := configuration.Get()
-	echoProvider := handler.NewEchoProvider()
-	bazelGrpcGatewayPracticeServiceV1 := handler.NewBazelGrpcGatewayPracticeServiceV1(echoProvider)
 	rdbConnector := infrastructure.NewRDBConnector(config)
 	user := repository.NewUser(rdbConnector)
 	createUser := usecase.NewCreateUser(user)
 	createUserProvider := handler.NewCreateUserProvider(createUser)
 	userServiceV1 := handler.NewUserServiceV1(createUserProvider)
-	grpcServer := server.NewGrpcServer(config, bazelGrpcGatewayPracticeServiceV1, userServiceV1)
+	grpcServer := server.NewGrpcServer(config, userServiceV1)
 	return grpcServer
 }
