@@ -3,15 +3,12 @@ load("@io_bazel_rules_go//go:def.bzl", "go_library")
 go_library(
     name = "go_default_library",
     srcs = [
-        "bazel_grpc_gateway_practice_service_v1.go",
         "create_user.go",
-        "echo.go",
         "user_service_v1.go",
     ],
     importpath = "github.com/Pranc1ngPegasus/bazel-grpc-gateway-practice/adapter/handler",
     visibility = ["//visibility:public"],
     deps = [
-        "//proto/bazel_grpc_gateway_practice/v1:go_default_library",
         "//proto/user/v1:go_default_library",
         "//usecase:go_default_library",
     ],
