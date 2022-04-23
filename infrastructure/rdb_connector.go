@@ -37,13 +37,11 @@ func NewRDBConnector(config configuration.Config) RDBConnector {
 	}
 
 	drv := entsql.OpenDB(dialect.MySQL, dbConn)
-	defer drv.Close()
 
 	opt := []ent.Option{
 		ent.Driver(drv),
 	}
 	client := ent.NewClient(opt...)
-	defer client.Close()
 
 	ctx := context.Background()
 	if err := client.Schema.Create(ctx); err != nil {
