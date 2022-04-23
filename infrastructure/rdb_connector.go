@@ -10,6 +10,7 @@ import (
 
 	"entgo.io/ent/dialect"
 	entsql "entgo.io/ent/dialect/sql"
+	_ "github.com/go-sql-driver/mysql"
 	"github.com/rs/zerolog/log"
 )
 
@@ -36,13 +37,11 @@ func NewRDBConnector(config configuration.Config) RDBConnector {
 	}
 
 	drv := entsql.OpenDB(dialect.MySQL, dbConn)
-	defer drv.Close()
 
 	opt := []ent.Option{
 		ent.Driver(drv),
 	}
 	client := ent.NewClient(opt...)
-	defer client.Close()
 
 	ctx := context.Background()
 	if err := client.Schema.Create(ctx); err != nil {
