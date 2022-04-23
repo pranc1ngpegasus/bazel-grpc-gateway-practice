@@ -3,15 +3,14 @@ load("@io_bazel_rules_go//go:def.bzl", "go_binary", "go_library")
 go_library(
     name = "go_default_library",
     srcs = [
-        "inject.go",
         "main.go",
+        "wire_gen.go",
     ],
     importpath = "github.com/Pranc1ngPegasus/bazel-grpc-gateway-practice/cmd/envoy",
     visibility = ["//visibility:private"],
     deps = [
         "//adapter/configuration:go_default_library",
         "//adapter/server:go_default_library",
-        "@com_github_google_wire//:go_default_library",
         "@com_github_rs_zerolog//log:go_default_library",
     ],
 )

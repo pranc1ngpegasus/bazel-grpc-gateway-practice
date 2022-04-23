@@ -19,7 +19,7 @@ type (
 	}
 
 	httpServer struct {
-		server http.Handler
+		server *runtime.ServeMux
 		config configuration.Config
 	}
 )
@@ -27,28 +27,29 @@ type (
 func NewHttpServer(
 	config configuration.Config,
 ) HttpServer {
+	return &httpServer{
+		server: runtime.NewServeMux(),
+		config: config,
+	}
+}
+
+func (s *httpServer) Serve() error {
 	ctx := context.Background()
 	ctx, cancel := context.WithCancel(ctx)
 	defer cancel()
 
-	mux := runtime.NewServeMux()
 	opts := []grpc.DialOption{
 		grpc.WithTransportCredentials(
 			insecure.NewCredentials(),
 		),
 	}
 
-	if err := pb.RegisterBazelGrpcGatewayPracticeServiceHandlerFromEndpoint(ctx, mux, ":"+config.Grpc.ServerPort, opts); err != nil {
+	log.Info().Msgf("listen gRPC port: %s", s.config.Grpc.ServerPort)
+	if err := pb.RegisterBazelGrpcGatewayPracticeServiceHandlerFromEndpoint(ctx, s.server, ":"+s.config.Grpc.ServerPort, opts); err != nil {
 		log.Error().Stack().Caller().Err(err)
 		panic(err)
 	}
 
-	return &httpServer{
-		server: mux,
-	}
-}
-
-func (s *httpServer) Serve() error {
 	log.Info().Msgf("HTTP port: %s", s.config.Http.ServerPort)
 	if err := http.ListenAndServe(":"+s.config.Http.ServerPort, s.server); err != nil {
 		log.Error().Stack().Caller().Err(err)
