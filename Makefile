@@ -34,9 +34,12 @@ logs:
 	docker-compose $(COMPOSE_OPTS) logs -f
 
 # Bazel
-BAZEL_BUILD_PLATFORM := darwin_arm64
-
-ifdef GITHUB_ACTIONS
+BAZEL_BUILD_PLATFORM := ""
+ifeq ($(shell uname)_$(shell uname -m), Darwin_x86_64)
+	BAZEL_BUILD_PLATFORM = darwin
+else ifeq ($(shell uname)_$(shell uname -m), Darwin_arm64)
+	BAZEL_BUILD_PLATFORM = darwin_arm64
+else ifeq ($(shell uname)_$(shell uname -m), Linux_x86_64)
 	BAZEL_BUILD_PLATFORM = k8
 endif
 
