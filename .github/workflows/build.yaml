@@ -21,3 +21,10 @@ jobs:
 
       - name: Build
         run: make bazel-build
+
+      - name: check git diff
+        run: |
+          if ! git diff --exit-code --quiet
+          then
+            exit 1
+          fi
