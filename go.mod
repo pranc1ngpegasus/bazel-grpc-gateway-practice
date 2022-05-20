@@ -6,7 +6,7 @@ require (
 	entgo.io/ent v0.10.1
 	github.com/go-sql-driver/mysql v1.6.0
 	github.com/google/wire v0.5.0
-	github.com/grpc-ecosystem/grpc-gateway/v2 v2.10.0
+	github.com/grpc-ecosystem/grpc-gateway/v2 v2.10.1
 	github.com/kelseyhightower/envconfig v1.4.0
 	github.com/philip-bui/grpc-zerolog v1.0.1
 	github.com/rs/xid v1.4.0
@@ -24,7 +24,7 @@ require (
 	github.com/go-openapi/inflect v0.19.0 // indirect
 	github.com/golang/glog v1.0.0 // indirect
 	github.com/golang/protobuf v1.5.2 // indirect
-	github.com/google/go-cmp v0.5.7 // indirect
+	github.com/google/go-cmp v0.5.8 // indirect
 	github.com/google/subcommands v1.0.1 // indirect
 	github.com/google/uuid v1.3.0 // indirect
 	github.com/hashicorp/hcl/v2 v2.10.0 // indirect
