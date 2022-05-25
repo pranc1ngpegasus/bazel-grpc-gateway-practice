@@ -47,6 +47,10 @@ endif
 resolve-dependencies: proto-clean
 	bazelisk run //:buildifier
 	bazelisk run //:gazelle
+
+.PHONY: update-go-dependencies
+update-go-dependencies:
+	go mod tidy
 	bazelisk run //:gazelle -- update-repos -from_file=go.mod -to_macro=deps.bzl%go_dependencies
 
 .PHONY: proto-clean
