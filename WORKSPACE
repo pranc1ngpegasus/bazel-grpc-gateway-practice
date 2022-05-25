@@ -1,4 +1,4 @@
-load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
+load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive", "http_file")
 
 # rules_go: https://github.com/bazelbuild/rules_go
 http_archive(
@@ -81,6 +81,13 @@ container_repositories()
 container_deps()
 
 _go_image_repos()
+
+# grpc health probe
+http_file(
+    name = "grpc_health_probe",
+    downloaded_file_path = "grpc_health_probe",
+    urls = ["https://github.com/grpc-ecosystem/grpc-health-probe/releases/download/v0.4.11/grpc_health_probe-linux-amd64"],
+)
 
 ############################################################
 # Define your own dependencies here using go_repository.
