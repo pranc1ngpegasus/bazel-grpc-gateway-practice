@@ -11,7 +11,7 @@ require (
 	github.com/philip-bui/grpc-zerolog v1.0.1
 	github.com/rs/xid v1.4.0
 	github.com/rs/zerolog v1.26.1
-	google.golang.org/genproto v0.0.0-20220524164028-0aa58a9287dd
+	google.golang.org/genproto v0.0.0-20220525015930-6ca3db687a9d
 	google.golang.org/grpc v1.46.2
 	google.golang.org/grpc/cmd/protoc-gen-go-grpc v1.2.0
 	google.golang.org/protobuf v1.28.0
