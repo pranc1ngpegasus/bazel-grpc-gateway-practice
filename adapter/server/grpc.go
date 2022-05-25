@@ -11,6 +11,7 @@ import (
 	"github.com/rs/zerolog/log"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/keepalive"
+	"google.golang.org/grpc/reflection"
 )
 
 type (
@@ -49,6 +50,8 @@ func NewGrpcServer(
 	)
 
 	userV1.RegisterUserServiceServer(server, userServiceV1)
+
+	reflection.Register(server)
 
 	return &grpcServer{
 		server: server,

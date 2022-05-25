@@ -1,4 +1,7 @@
 load("@io_bazel_rules_go//go:def.bzl", "go_binary", "go_library")
+load("@bazel_tools//tools/build_defs/pkg:pkg.bzl", "pkg_tar")
+load("@io_bazel_rules_docker//container:container.bzl", "container_image")
+load("@io_bazel_rules_docker//go:image.bzl", "go_image")
 
 go_library(
     name = "go_default_library",
@@ -22,5 +25,30 @@ go_library(
 go_binary(
     name = "server",
     embed = [":go_default_library"],
+    visibility = ["//visibility:public"],
+)
+
+pkg_tar(
+    name = "tar",
+    srcs = ["@grpc_health_probe//file"],
+    mode = "0o755",
+    package_dir = "/bin",
+    visibility = ["//visibility:public"],
+)
+
+container_image(
+    name = "base_image",
+    base = "@go_image_base//image",
+    tars = [":tar"],
+    visibility = ["//visibility:public"],
+)
+
+go_image(
+    name = "image",
+    base = "base_image",
+    embed = [":go_default_library"],
+    goarch = "amd64",
+    goos = "linux",
+    pure = "on",
     visibility = ["//visibility:public"],
 )
