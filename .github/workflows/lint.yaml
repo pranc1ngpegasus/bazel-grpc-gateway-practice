@@ -1,0 +1,31 @@
+name: Lint
+
+on:
+  push:
+
+jobs:
+  proto-format:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Setup formatter
+        run: |
+          sudo apt install --no-install-recommends -y clang-format
+
+      - name: Format code
+        run: |
+          find . -iname '*.proto' | xargs clang-format -i -style=Google
+
+      - name: Commit and Push
+        run: |
+          git add -N .
+          if ! git diff --exit-code --quiet
+          then
+            git config --local user.email "$(git log --format='%ae' HEAD^!)"
+            git config --local user.name "$(git log --format='%an' HEAD^!)"
+            git add .
+            git commit -m "refactor by Github Actions"
+            git push origin HEAD:${GITHUB_REF#refs/heads/}
+          fi
