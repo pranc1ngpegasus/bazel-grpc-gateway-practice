@@ -9,13 +9,15 @@ import "proto/types/user.proto";
 service UserService {
   rpc CreateUser(CreateUserRequest) returns (CreateUserResponse) {
     option (google.api.http) = {
-      post : "/v1/user"
-      body : "*"
+      post: "/v1/user"
+      body: "*"
     };
   }
 }
 
-message CreateUserRequest { string name = 1; }
+message CreateUserRequest {
+  string name = 1;
+}
 
 message CreateUserResponse {
   string id = 1;
