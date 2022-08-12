@@ -6,7 +6,7 @@ require (
 	entgo.io/ent v0.11.1
 	github.com/go-sql-driver/mysql v1.6.0
 	github.com/google/wire v0.5.0
-	github.com/grpc-ecosystem/grpc-gateway/v2 v2.11.1
+	github.com/grpc-ecosystem/grpc-gateway/v2 v2.11.2
 	github.com/kelseyhightower/envconfig v1.4.0
 	github.com/philip-bui/grpc-zerolog v1.0.1
 	github.com/rs/xid v1.4.0
